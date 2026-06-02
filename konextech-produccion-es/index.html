@@ -1,1 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KONEXTECH | Tienda</title>
+  <!--
+    IMPORTANTE:
+    Usamos rutas RELATIVAS para que funcione tanto en hosting (Netlify/Vercel)
+    como abriendo el proyecto con Live Server en VS Code.
+  -->
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandLeft">
+        <img src="./assets/logo.jpg" alt="KONEXTECH" class="brand__logo">
+        <div class="brand__meta">
+          <a href="/index.html"><h1 class="brand__name">KONEXTECH</h1></a>
+          <p class="brand__tag">Electrónica • Celulares • Hogar • Envío sin cargo</p>
+        </div>
+      </div>
+      <div class="brandRight">
+        <span class="pillTop">Compra segura</span>
+        <span class="pillTop">Envío sin cargo</span>
+      </div>
+  </div>
 
+    <nav class="nav">
+      <button class="nav__link is-active" data-view="home">Inicio</button>
+
+      <div class="nav__dropdown">
+        <button class="nav__link" aria-haspopup="true" aria-expanded="false">Productos ▾</button>
+        <div class="nav__menu">
+          <button class="nav__item" data-category="hogar">Hogar</button>
+          <button class="nav__item" data-category="electronica">Producto electrónico</button>
+          <button class="nav__item" data-category="celulares">Celulares</button>
+          <button class="nav__item" data-category="smartwatch">Smart watch</button>
+          <button class="nav__item" data-category="juguetes">Juguetes</button>
+        </div>
+      </div>
+
+      <button class="nav__link" data-view="payments">Métodos de pagos</button>
+
+      <button class="nav__link" data-view="cart">
+        Carrito
+        <span class="badge" id="cartCount">0</span>
+      </button>
+
+      <button class="nav__link" data-view="contact">Contacto</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="hero">
+      <div class="hero__content">
+        <h2>Comprá fácil y rápido en <span class="accent">KONEXTECH</span></h2>
+        <p>Productos destacados • Precios claros • <b>Envío sin cargo</b> a domicilio.</p>
+        <div class="hero__actions">
+          <input id="searchInput" class="input" type="search" placeholder="Buscar productos..." />
+          <select id="sortSelect" class="input">
+            <option value="new">Ordenar: más nuevos</option>
+            <option value="asc">Precio: menor a mayor</option>
+            <option value="desc">Precio: mayor a menor</option>
+          </select>
+        </div>
+      </div>
+      <div class="hero__glow" aria-hidden="true"></div>
+    </section>
+
+    <section class="view is-active" id="view-home">
+      <div class="sectionHead">
+        <h3>Productos</h3>
+        <p class="muted" id="productsInfo">Cargando...</p>
+      </div>
+      <div class="grid" id="productsGrid"></div>
+    </section>
+
+    <section class="view" id="view-payments">
+      <div class="sectionHead">
+        <h3>Métodos de pago</h3>
+        <p class="muted">Transferencia / Depósito / Tarjeta (checkout seguro)</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h4>Transferencia / Depósito</h4>
+          <div id="bankDetails" class="mono muted"></div>
+          <p class="note">Después de pagar, enviá el comprobante por WhatsApp o email para confirmar.</p>
+        </article>
+
+        <article class="card">
+          <h4>Tarjeta de crédito o débito</h4>
+          <p class="muted">Pagá con tarjeta mediante un <b>checkout seguro</b> (Mercado Pago o Ualá).</p>
+
+          <div class="hero__actions" style="margin-top:10px; gap:10px;">
+            <a class="btn btn--primary" id="mpPayBtn" href="#" target="_blank" rel="noopener">Pagar con Mercado Pago</a>
+            <a class="btn" id="ualaPayBtn" href="#" target="_blank" rel="noopener"
+               style="background:rgba(12,15,13,.03); border:1px solid rgba(12,15,13,.10)">
+               Pagar con Ualá
+            </a>
+          </div>
+
+          <p class="note">El pago se realiza fuera del sitio (más seguro).</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="view-cart">
+      <div class="sectionHead">
+        <h3>Carrito</h3>
+        <p class="muted">Envío: <b>sin cargo</b></p>
+      </div>
+
+      <div class="cart">
+        <div class="cart__items" id="cartItems"></div>
+
+        <aside class="cart__summary">
+          <div class="summaryBox">
+            <div class="row"><span>Subtotal</span><b id="subtotal">$0</b></div>
+            <div class="row"><span>Envío</span><b class="accent">$0</b></div>
+            <div class="row row--total"><span>Total</span><b id="total">$0</b></div>
+          </div>
+
+          <form id="checkoutForm" class="form">
+            <h4>Datos de envío (sin cargo)</h4>
+            <input class="input" name="fullName" placeholder="Nombre y apellido" required />
+            <input class="input" name="phone" placeholder="Teléfono" required />
+            <input class="input" name="address" placeholder="Dirección (calle, número, ciudad, provincia)" required />
+            <textarea class="input" name="notes" rows="3" placeholder="Aclaraciones (piso, dpto, referencias)"></textarea>
+
+            <h4>Elegí cómo pagar</h4>
+            <label class="radio">
+              <input type="radio" name="payMethod" value="transferencia" checked />
+              <span>Transferencia / Depósito</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="payMethod" value="tarjeta_checkout" />
+              <span>Tarjeta (checkout seguro)</span>
+            </label>
+
+            <button class="btn btn--primary" type="submit">Finalizar compra</button>
+            <p class="muted tiny" id="orderMsg"></p>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-contact">
+      <div class="sectionHead">
+        <h3>Contacto</h3>
+        <p class="muted">Escribinos para coordinar entrega y confirmar pagos</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h4>WhatsApp</h4>
+          <p class="mono muted" id="whatsText">+54 381 000-0000</p>
+          <p class="note">Podés editarlo en el archivo JS o luego lo conectamos a settings.</p>
+        </article>
+        <article class="card">
+          <h4>Email</h4>
+          <p class="mono muted" id="emailText">konextech@tudominio.com</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> KONEXTECH • Envío sin cargo</p>
+    <a class="footer__link" href="./admin.html">Panel Admin</a>
+  </footer>
+
+  <!-- Catálogo demo (50 productos) para cuando /api no está disponible -->
+  <script src="./js/mock-products.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

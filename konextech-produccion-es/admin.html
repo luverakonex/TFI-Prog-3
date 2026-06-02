@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KONEXTECH | Admin</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandLeft">
+        <img src="./assets/logo.jpg" alt="KONEXTECH" class="brand__logo">
+        <div class="brand__meta">
+          <h1 class="brand__name">Panel Admin</h1>
+          <p class="brand__tag">Subí productos y configurá pagos</p>
+        </div>
+      </div>
+      <div class="brandRight">
+        <span class="pillTop">Producción</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a class="nav__link is-active" href="./index.html">← Volver a la tienda</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="cards">
+      <article class="card">
+        <h3>Acceso</h3>
+        <input class="input" id="adminPass" placeholder="Contraseña admin" type="password" />
+        <button class="btn btn--primary" id="savePassBtn">Guardar</button>
+        <p class="muted tiny">Se guarda en este navegador (localStorage).</p>
+      </article>
+
+      <article class="card">
+        <h3>Configurar datos bancarios</h3>
+        <form id="bankForm" class="form">
+          <input class="input" name="titular" placeholder="Titular" />
+          <input class="input" name="banco" placeholder="Banco" />
+          <input class="input" name="cbu" placeholder="CBU" />
+          <input class="input" name="alias" placeholder="Alias" />
+          <input class="input" name="cuit" placeholder="CUIT" />
+          <button class="btn btn--primary" type="submit">Guardar datos bancarios</button>
+          <p class="muted tiny" id="bankMsg"></p>
+        </form>
+
+        <h3 style="margin-top:18px">Links de pago con tarjeta (checkout seguro)</h3>
+        <form id="checkoutLinkForm" class="form">
+          <input class="input" name="mpCheckoutUrl" placeholder="Link de Mercado Pago (checkout/link de pago)" />
+          <input class="input" name="ualaCheckoutUrl" placeholder="Link de Ualá (checkout/link de pago)" />
+          <button class="btn btn--primary" type="submit">Guardar links</button>
+          <p class="muted tiny" id="linkMsg"></p>
+        </form>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <h3>Crear producto</h3>
+      <form id="productForm" class="form">
+        <input class="input" name="title" placeholder="Título" required />
+        <textarea class="input" name="description" rows="3" placeholder="Descripción"></textarea>
+        <input class="input" name="price" placeholder="Precio (solo número)" inputmode="decimal" required />
+        <select class="input" name="category" required>
+          <option value="">Elegir categoría</option>
+          <option value="hogar">hogar</option>
+          <option value="electronica">electronica</option>
+          <option value="celulares">celulares</option>
+          <option value="smartwatch">smartwatch</option>
+          <option value="juguetes">juguetes</option>
+        </select>
+        <input class="input" name="image" type="file" accept="image/png,image/jpeg,image/webp" />
+        <button class="btn btn--primary" type="submit">Publicar producto</button>
+        <p class="muted tiny" id="prodMsg"></p>
+      </form>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <h3>Productos publicados</h3>
+      <div id="adminProducts" class="grid"></div>
+      <p class="muted tiny" id="listMsg"></p>
+    </section>
+  </main>
+
+  <!-- Catálogo demo (50 productos) para cuando /api no está disponible -->
+  <script src="./js/mock-products.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>

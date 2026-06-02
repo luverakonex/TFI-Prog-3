@@ -1,0 +1,12 @@
+{
+  "name": "konextech-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npx vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }
+}
